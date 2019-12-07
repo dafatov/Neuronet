@@ -1,8 +1,7 @@
 import java.awt.image.BufferedImage;
-import java.text.MessageFormat;
 
 public class Main {
-    //System.exit(1000124);
+    //System.exit(1000225);
     static final char[] ALPHABET = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
             'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     static double[][] trainingSet;
@@ -42,15 +41,15 @@ public class Main {
 //
 //        /*Lab5*/
 //        stringBuilder.append("\nLab5\n");
-//        trainingSet = new double[][]{{0, 0}, {0, 1}, {1, 0}, {1, 1}};
+//        trainingSet = new double[][]{{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
 //        BackpropagationAlgorithm backpropagationAlgorithm = new BackpropagationAlgorithm(2, 1,
-//                new Neuronet.HiddenLayerStruct[]{new Neuronet.HiddenLayerStruct(100, 0),
+//                new Neuronet.HiddenLayerStruct[]{new Neuronet.HiddenLayerStruct(100, -1),
 //                new Neuronet.HiddenLayerStruct(100, 1)}, 1);
 //        stringBuilder.append(backpropagationAlgorithm.launch(false));
 //
 //        /*Lab6*/
 //        stringBuilder.append("\nLab6\n");
-//        trainingSet = new double[][] {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
+//        trainingSet = new double[][] {{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
 //        RBFAlgorithm rbfAlgorithm = new RBFAlgorithm(2, new Neuronet.HiddenLayerStruct(4), 1);
 //        stringBuilder.append(rbfAlgorithm.launch(false));
 //
@@ -66,10 +65,12 @@ public class Main {
 //        CounterAlgorithm counterAlgorithm = new CounterAlgorithm(4,
 //                new Neuronet.HiddenLayerStruct(3), 4);
 //        stringBuilder.append(counterAlgorithm.launch(false));
-
-        /*Lab9*/
-        stringBuilder.append("\nLab9\n");
-
+//
+//        /*Lab9*/
+//        stringBuilder.append("\nLab9\n");
+//        trainingSet = new double[][]{{-1, 1, -1, 1}, {1, -1, 1, 1}, {-1, 1, -1, -1}};
+//        HopfieldAlgorithm hopfieldAlgorithm = new HopfieldAlgorithm(trainingSet[0].length);
+//        stringBuilder.append(hopfieldAlgorithm.launch(false));
 
         System.out.println(stringBuilder.toString());
     }
@@ -80,7 +81,7 @@ public class Main {
             BufferedImage tmp = FileManager.readImage("D:\\YandexDisk\\MyProjects\\Idea\\Neuronet\\" +
                     "data\\Data_" + i + ".png");
             for (int j = 0; j < tmp.getHeight() * tmp.getWidth(); j++) {
-                Main.trainingSet[i][j] = tmp.getRGB(j % tmp.getWidth(), j / tmp.getWidth()) == 0 ? 0 : 1;
+                Main.trainingSet[i][j] = tmp.getRGB(j % tmp.getWidth(), j / tmp.getWidth()) == -1 ? -1 : 1;
             }
         }
     }
@@ -91,7 +92,7 @@ public class Main {
             BufferedImage tmp = FileManager.readImage("D:\\YandexDisk\\MyProjects\\Idea\\Neuronet\\" +
                     "data\\Data_" + ALPHABET[i] + ".png");
             for (int j = 0; j < tmp.getHeight() * tmp.getWidth(); j++) {
-                Main.trainingSet[i][j] = tmp.getRGB(j % tmp.getWidth(), j / tmp.getWidth()) == 0 ? 0 : 1;
+                Main.trainingSet[i][j] = tmp.getRGB(j % tmp.getWidth(), j / tmp.getWidth()) == -1 ? -1 : 1;
             }
         }
     }
