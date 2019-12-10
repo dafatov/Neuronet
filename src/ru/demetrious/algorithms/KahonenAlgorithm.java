@@ -1,12 +1,17 @@
+package ru.demetrious.algorithms;
+
 import com.sun.istack.internal.Nullable;
+import ru.demetrious.Main;
+import ru.demetrious.neuronet.INeuronet;
+import ru.demetrious.neuronet.KahonenNeuronet;
 
 import java.util.Arrays;
 
-class KahonenAlgorithm implements IAlgorithm {
+public class KahonenAlgorithm implements IAlgorithm {
     double LEARN_SCALE = .6;
-    INeuronet neuronet;
+    private INeuronet neuronet;
 
-    KahonenAlgorithm(int inputs, int outputs) {
+    public KahonenAlgorithm(int inputs, int outputs) {
         neuronet = new KahonenNeuronet(this, inputs, outputs);
     }
 
@@ -19,7 +24,7 @@ class KahonenAlgorithm implements IAlgorithm {
             Main.Learning learning = new Main.Learning(this,
                     Main.trainingSet, new double[][]{null, null, null, null}, 0) {
                 @Override
-                void onEveryTraining() {
+                public void onEveryTraining() {
                     LEARN_SCALE *= 0.5;
                 }
             };
@@ -56,7 +61,7 @@ class KahonenAlgorithm implements IAlgorithm {
 
     @Override
     public boolean learn(double[] input, @Nullable double[] ideal) {
-        if (neuronet.getInput().neurons.length == input.length &&
+        if (neuronet.getInput().getNeurons().length == input.length &&
                 ideal == null) {
             double[] inputNormalized = normalize(input.clone());
 
@@ -66,9 +71,9 @@ class KahonenAlgorithm implements IAlgorithm {
             if (LEARN_SCALE > 0) {
                 for (int i = 0; i < result.length; i++) {
                     if (result[i] == 1) {
-                        for (int j = 0; j < neuronet.getOutput().neurons[i].weight.length; j++) {
-                            neuronet.getOutput().neurons[i].weight[j] += LEARN_SCALE *
-                                    (inputNormalized[j] - neuronet.getOutput().neurons[i].weight[j]);
+                        for (int j = 0; j < neuronet.getOutput().getNeurons()[i].getWeight().length; j++) {
+                            neuronet.getOutput().getNeurons()[i].getWeight()[j] += LEARN_SCALE *
+                                    (inputNormalized[j] - neuronet.getOutput().getNeurons()[i].getWeight()[j]);
                         }
                     }
                 }
@@ -100,8 +105,8 @@ class KahonenAlgorithm implements IAlgorithm {
     }
 
     private void initWeights(int n) {
-        for (int i = 0; i < neuronet.getOutput().neurons.length; i++) {
-            Arrays.fill(neuronet.getOutput().neurons[i].weight, 1 / Math.sqrt(n));
+        for (int i = 0; i < neuronet.getOutput().getNeurons().length; i++) {
+            Arrays.fill(neuronet.getOutput().getNeurons()[i].getWeight(), 1 / Math.sqrt(n));
         }
     }
 }

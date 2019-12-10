@@ -1,13 +1,15 @@
+package ru.demetrious.util;
+
 import javax.swing.*;
 import java.awt.*;
 
-class GUI extends JFrame {
+public class GUI extends JFrame {
     private final int max;
     private JProgressBar progressBar;
     private JTextField textField, textField2, textField3;
 
-    GUI(int max) {
-        super("Neuronet learning");
+    public GUI(int max) {
+        super("Neuronet.Neuronet learning");
         this.max = max;
         init();
     }
@@ -64,11 +66,11 @@ class GUI extends JFrame {
                 Toolkit.getDefaultToolkit().getScreenSize().height / 4);
     }
 
-    boolean setProgress(int value) {
+    public void setProgress(int value) {
         StringBuilder tmp = new StringBuilder();
 
         if (value < 0 || value > max && max > 0) {
-            return false;
+            return;
         }
         if (max > 0) {
             tmp.append((double) Math.round((double) (value) / max * 10000) / 100);
@@ -85,9 +87,8 @@ class GUI extends JFrame {
         textField2.setText(String.valueOf(value));
         if (value == max || max == 0) {
             textField.setText("ETUDE");
-            return true;
+            return;
         }
         textField.setText(tmp + "%");
-        return true;
     }
 }

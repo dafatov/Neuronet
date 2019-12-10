@@ -1,19 +1,22 @@
-import com.sun.istack.internal.NotNull;
+package ru.demetrious.algorithms;
 
-interface IAlgorithm {
+import com.sun.istack.internal.NotNull;
+import ru.demetrious.neuronet.INeuronet;
+
+public interface IAlgorithm {
     StringBuilder launch(boolean learn);
 
     //double[] step(double[] input);
 
     default double[] step(double[] input, int index) {
-        if (getNeuronet()[index].getInput().neurons.length == input.length) {
-            for (int i = 0; i < getNeuronet()[index].getInput().neurons.length; i++) {
-                getNeuronet()[index].getInput().neurons[i].output = input[i];
+        if (getNeuronet()[index].getInput().getNeurons().length == input.length) {
+            for (int i = 0; i < getNeuronet()[index].getInput().getNeurons().length; i++) {
+                getNeuronet()[index].getInput().getNeurons()[i].setOutput(input[i]);
             }
-            getNeuronet()[index].getInput().next.calculate();
-            double[] result = new double[getNeuronet()[index].getOutput().neurons.length];
-            for (int i = 0; i < getNeuronet()[index].getOutput().neurons.length; i++) {
-                result[i] = getNeuronet()[index].getOutput().neurons[i].output;
+            getNeuronet()[index].getInput().getNext().calculate();
+            double[] result = new double[getNeuronet()[index].getOutput().getNeurons().length];
+            for (int i = 0; i < getNeuronet()[index].getOutput().getNeurons().length; i++) {
+                result[i] = getNeuronet()[index].getOutput().getNeurons()[i].getOutput();
             }
             result = getNeuronet()[index].onAfterStep(result);
             if (++index < getNeuronet().length) {

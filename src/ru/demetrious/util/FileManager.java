@@ -1,10 +1,12 @@
+package ru.demetrious.util;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 
-class FileManager {
-    static BufferedImage readImage(String path) {
+public class FileManager {
+    public static BufferedImage readImage(String path) {
         try {
             return ImageIO.read(new File(path));
         } catch (IOException e) {
@@ -14,7 +16,7 @@ class FileManager {
         return null;
     }
 
-    static boolean write(String path, String string, boolean append) {
+    public static boolean write(String path, String string, boolean append) {
         if (!new File(path).exists()) {
             if (!createFile(path)) return false;
         }
@@ -29,7 +31,7 @@ class FileManager {
         }
     }
 
-    static ArrayList<String> read(String path) {
+    public static ArrayList<String> read(String path) {
         ArrayList<String> strings = new ArrayList<>();
 
         if (!new File(path).exists()) return null;
@@ -48,7 +50,7 @@ class FileManager {
         return strings;
     }
 
-    static boolean createFile(String path) {
+    public static boolean createFile(String path) {
         String[] tmp = path.split("\\\\");
         String fileName = tmp[tmp.length - 1];
         String fileDir = path.substring(0, path.length() - fileName.length() - 1);

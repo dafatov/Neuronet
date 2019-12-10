@@ -1,12 +1,17 @@
+package ru.demetrious.algorithms;
+
 import com.sun.istack.internal.Nullable;
+import ru.demetrious.Main;
+import ru.demetrious.neuronet.INeuronet;
+import ru.demetrious.neuronet.Neuronet;
 
 import java.util.Arrays;
 
-class HopfieldAlgorithm implements IAlgorithm {
+public class HopfieldAlgorithm implements IAlgorithm {
     final int STEP_COUNTER = 1000;
-    INeuronet neuronet;
+    private INeuronet neuronet;
 
-    HopfieldAlgorithm(int inputs) {
+    public HopfieldAlgorithm(int inputs) {
         neuronet = new Neuronet(this, inputs, inputs);
     }
 
@@ -69,12 +74,12 @@ class HopfieldAlgorithm implements IAlgorithm {
 
     @Override
     public boolean learn(@Nullable double[] input, double[] ideal) {
-        if (neuronet.getOutput().neurons.length == ideal.length &&
+        if (neuronet.getOutput().getNeurons().length == ideal.length &&
                 input == null) {
             for (int i = 0; i < ideal.length; i++) {
                 for (int j = i + 1; j < ideal.length; j++) {
-                    neuronet.getOutput().neurons[i].weight[j] += ideal[i] * ideal[j];
-                    neuronet.getOutput().neurons[j].weight[i] = neuronet.getOutput().neurons[i].weight[j];
+                    neuronet.getOutput().getNeurons()[i].getWeight()[j] += ideal[i] * ideal[j];
+                    neuronet.getOutput().getNeurons()[j].getWeight()[i] = neuronet.getOutput().getNeurons()[i].getWeight()[j];
                 }
             }
         } else try {

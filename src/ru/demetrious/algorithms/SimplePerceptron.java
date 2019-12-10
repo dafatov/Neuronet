@@ -1,10 +1,15 @@
+package ru.demetrious.algorithms;
+
+import ru.demetrious.neuronet.INeuronet;
+import ru.demetrious.neuronet.Neuronet;
+
 import java.util.Arrays;
 
-class SimplePerceptron implements IAlgorithm {
+public class SimplePerceptron implements IAlgorithm {
     private LogicFunction logicFunction;
     private INeuronet neuronet;
 
-    SimplePerceptron(LogicFunction logicFunction) {
+    public SimplePerceptron(LogicFunction logicFunction) {
         init(logicFunction);
     }
 
@@ -13,16 +18,16 @@ class SimplePerceptron implements IAlgorithm {
         switch (this.logicFunction) {
             case OR:
                 neuronet = new Neuronet(this, 2, 1, 1);
-                for (int i = 0; i < neuronet.getOutput().neurons.length; i++) {
-                    Arrays.fill(neuronet.getOutput().neurons[i].weight, 1);
-                    neuronet.getOutput().neurons[i].biasWeight = -0.5;
+                for (int i = 0; i < neuronet.getOutput().getNeurons().length; i++) {
+                    Arrays.fill(neuronet.getOutput().getNeurons()[i].getWeight(), 1);
+                    neuronet.getOutput().getNeurons()[i].setBiasWeight(-0.5);
                 }
                 break;
             case NOT:
                 neuronet = new Neuronet(this, 1, 1, 1);
-                for (int i = 0; i < neuronet.getOutput().neurons.length; i++) {
-                    Arrays.fill(neuronet.getOutput().neurons[i].weight, -1);
-                    neuronet.getOutput().neurons[i].biasWeight = 0.5;
+                for (int i = 0; i < neuronet.getOutput().getNeurons().length; i++) {
+                    Arrays.fill(neuronet.getOutput().getNeurons()[i].getWeight(), -1);
+                    neuronet.getOutput().getNeurons()[i].setBiasWeight(0.5);
                 }
                 break;
             default:
@@ -35,13 +40,13 @@ class SimplePerceptron implements IAlgorithm {
         }
     }
 
-    int calculate(int x1, int x2) {
+    public int calculate(int x1, int x2) {
         if (logicFunction.equals(LogicFunction.OR)) {
             if ((x1 == 0 || x1 == 1) && (x2 == 0 || x2 == 1)) {
-                neuronet.getInput().neurons[0].output = x1;
-                neuronet.getInput().neurons[1].output = x2;
-                neuronet.getInput().next.calculate();
-                return (int) neuronet.getOutput().neurons[0].output;
+                neuronet.getInput().getNeurons()[0].setOutput(x1);
+                neuronet.getInput().getNeurons()[1].setOutput(x2);
+                neuronet.getInput().getNext().calculate();
+                return (int) neuronet.getOutput().getNeurons()[0].getOutput();
             } else try {
                 throw new Exception("Wrong input data... Need logical values");
             } catch (Exception e) {
@@ -57,12 +62,12 @@ class SimplePerceptron implements IAlgorithm {
         return -1;
     }
 
-    int calculate(int x) {
+    public int calculate(int x) {
         if (logicFunction.equals(LogicFunction.NOT)) {
             if (x == 0 || x == 1) {
-                neuronet.getInput().neurons[0].output = x;
-                neuronet.getInput().next.calculate();
-                return (int) neuronet.getOutput().neurons[0].output;
+                neuronet.getInput().getNeurons()[0].setOutput(x);
+                neuronet.getInput().getNext().calculate();
+                return (int) neuronet.getOutput().getNeurons()[0].getOutput();
             } else try {
                 throw new Exception("Wrong input data... Need logical values");
             } catch (Exception e) {
@@ -106,7 +111,7 @@ class SimplePerceptron implements IAlgorithm {
         return true;
     }
 
-    enum LogicFunction {
+    public enum LogicFunction {
         OR, NOT
     }
 }

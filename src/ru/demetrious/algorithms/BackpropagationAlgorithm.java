@@ -1,23 +1,29 @@
+package ru.demetrious.algorithms;
+
+import ru.demetrious.Main;
+import ru.demetrious.neuronet.INeuronet;
+import ru.demetrious.neuronet.Neuronet;
+
 import java.util.Arrays;
 
 public class BackpropagationAlgorithm implements IAlgorithm {
-    final double ALPHA = 0.5;
+    public final double ALPHA = 0.5;
     final double ERROR = 0.01;
-    INeuronet neuronet;
+    private INeuronet neuronet;
 
-    BackpropagationAlgorithm(int inputs, double biasInput, Neuronet.HiddenLayerStruct[] hiddenLayerStructs, int outputs) {
+    public BackpropagationAlgorithm(int inputs, double biasInput, Neuronet.HiddenLayerStruct[] hiddenLayerStructs, int outputs) {
         init(inputs, biasInput, hiddenLayerStructs, outputs);
     }
 
-    BackpropagationAlgorithm(int inputs, Neuronet.HiddenLayerStruct[] hiddenLayerStructs, int outputs) {
+    public BackpropagationAlgorithm(int inputs, Neuronet.HiddenLayerStruct[] hiddenLayerStructs, int outputs) {
         this(inputs, 0, hiddenLayerStructs, outputs);
     }
 
-    BackpropagationAlgorithm(int inputs, double biasInput, int outputs) {
+    public BackpropagationAlgorithm(int inputs, double biasInput, int outputs) {
         neuronet = new Neuronet(this, inputs, biasInput, outputs);
     }
 
-    BackpropagationAlgorithm(int inputs, int outputs) {
+    public BackpropagationAlgorithm(int inputs, int outputs) {
         this(inputs, 0, outputs);
     }
 
@@ -61,8 +67,8 @@ public class BackpropagationAlgorithm implements IAlgorithm {
 
     @Override
     public boolean learn(double[] input, double[] ideal) {
-        if (neuronet.getInput().neurons.length == input.length &&
-                neuronet.getOutput().neurons.length == ideal.length) {
+        if (neuronet.getInput().getNeurons().length == input.length &&
+                neuronet.getOutput().getNeurons().length == ideal.length) {
             double[] result = step(input);
             double error = 0;
             for (int i = 0; i < ideal.length; i++) {
@@ -89,18 +95,18 @@ public class BackpropagationAlgorithm implements IAlgorithm {
 
     private void initWeights() {
         for (int k = 0; k < neuronet.getHiddens().length; k++) {
-            for (int i = 0; i < neuronet.getHiddens()[k].neurons.length; i++) {
-                for (int j = 0; j < neuronet.getHiddens()[k].neurons[i].weight.length; j++) {
-                    neuronet.getHiddens()[k].neurons[i].weight[j] = getRandomAboveZero();
+            for (int i = 0; i < neuronet.getHiddens()[k].getNeurons().length; i++) {
+                for (int j = 0; j < neuronet.getHiddens()[k].getNeurons()[i].getWeight().length; j++) {
+                    neuronet.getHiddens()[k].getNeurons()[i].getWeight()[j] = getRandomAboveZero();
                 }
-                neuronet.getHiddens()[k].neurons[i].biasWeight = getRandomAboveZero();
+                neuronet.getHiddens()[k].getNeurons()[i].setBiasWeight(getRandomAboveZero());
             }
         }
-        for (int i = 0; i < neuronet.getOutput().neurons.length; i++) {
-            for (int j = 0; j < neuronet.getOutput().neurons[i].weight.length; j++) {
-                neuronet.getOutput().neurons[i].weight[j] = getRandomAboveZero();
+        for (int i = 0; i < neuronet.getOutput().getNeurons().length; i++) {
+            for (int j = 0; j < neuronet.getOutput().getNeurons()[i].getWeight().length; j++) {
+                neuronet.getOutput().getNeurons()[i].getWeight()[j] = getRandomAboveZero();
             }
-            neuronet.getOutput().neurons[i].biasWeight = getRandomAboveZero();
+            neuronet.getOutput().getNeurons()[i].setBiasWeight(getRandomAboveZero());
         }
     }
 

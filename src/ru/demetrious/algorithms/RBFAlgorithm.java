@@ -1,15 +1,23 @@
+package ru.demetrious.algorithms;
+
+import ru.demetrious.Main;
+import ru.demetrious.neuronet.INeuronet;
+import ru.demetrious.neuronet.Neuronet;
+import ru.demetrious.neuronet.RBFNeuronet;
+import ru.demetrious.neuronet.neuron.RBFNeuron;
+
 import java.util.Arrays;
 
 public class RBFAlgorithm implements IAlgorithm {
-    final double WIDTH = 5;
+    public final double WIDTH = 5;
     final double ERROR = 0.01;
-    INeuronet neuronet;
+    private INeuronet neuronet;
 
-    RBFAlgorithm(int inputs, double biasInput, Neuronet.HiddenLayerStruct hiddenLayerStruct, int outputs) {
+    public RBFAlgorithm(int inputs, double biasInput, Neuronet.HiddenLayerStruct hiddenLayerStruct, int outputs) {
         init(inputs, biasInput, hiddenLayerStruct, outputs);
     }
 
-    RBFAlgorithm(int inputs, Neuronet.HiddenLayerStruct hiddenLayerStruct, int outputs) {
+    public RBFAlgorithm(int inputs, Neuronet.HiddenLayerStruct hiddenLayerStruct, int outputs) {
         this(inputs, 0, hiddenLayerStruct, outputs);
     }
 
@@ -54,8 +62,8 @@ public class RBFAlgorithm implements IAlgorithm {
 
     @Override
     public boolean learn(double[] input, double[] ideal) {
-        if (neuronet.getInput().neurons.length == input.length &&
-                neuronet.getOutput().neurons.length == ideal.length) {
+        if (neuronet.getInput().getNeurons().length == input.length &&
+                neuronet.getOutput().getNeurons().length == ideal.length) {
             double[] result = step(input);
             double error = 0;
             for (int i = 0; i < ideal.length; i++) {
@@ -65,9 +73,9 @@ public class RBFAlgorithm implements IAlgorithm {
             System.err.println(error);
 
             if (error > ERROR) {
-                for (int i = 0; i < neuronet.getOutput().neurons.length; i++) {
-                    for (int j = 0; j < neuronet.getOutput().neurons[i].weight.length; j++) {
-                        neuronet.getOutput().neurons[i].weight[j] += (ideal[i] - result[i]) * neuronet.getOutput().neurons[i].input[j];
+                for (int i = 0; i < neuronet.getOutput().getNeurons().length; i++) {
+                    for (int j = 0; j < neuronet.getOutput().getNeurons()[i].getWeight().length; j++) {
+                        neuronet.getOutput().getNeurons()[i].getWeight()[j] += (ideal[i] - result[i]) * neuronet.getOutput().getNeurons()[i].getInput()[j];
                     }
                 }
             }
@@ -88,25 +96,25 @@ public class RBFAlgorithm implements IAlgorithm {
 
     private void initWeights() {
         for (int k = 0; k < neuronet.getHiddens().length; k++) {
-            for (int i = 0; i < neuronet.getHiddens()[k].neurons.length; i++) {
-                for (int j = 0; j < neuronet.getHiddens()[k].neurons[i].weight.length; j++) {
-                    neuronet.getHiddens()[k].neurons[i].weight[j] = getRandomAboveZero();
+            for (int i = 0; i < neuronet.getHiddens()[k].getNeurons().length; i++) {
+                for (int j = 0; j < neuronet.getHiddens()[k].getNeurons()[i].getWeight().length; j++) {
+                    neuronet.getHiddens()[k].getNeurons()[i].getWeight()[j] = getRandomAboveZero();
                 }
-                neuronet.getHiddens()[k].neurons[i].biasWeight = getRandomAboveZero();
+                neuronet.getHiddens()[k].getNeurons()[i].setBiasWeight(getRandomAboveZero());
             }
         }
-        for (int i = 0; i < neuronet.getOutput().neurons.length; i++) {
-            for (int j = 0; j < neuronet.getOutput().neurons[i].weight.length; j++) {
-                neuronet.getOutput().neurons[i].weight[j] = getRandomAboveZero();
+        for (int i = 0; i < neuronet.getOutput().getNeurons().length; i++) {
+            for (int j = 0; j < neuronet.getOutput().getNeurons()[i].getWeight().length; j++) {
+                neuronet.getOutput().getNeurons()[i].getWeight()[j] = getRandomAboveZero();
             }
-            neuronet.getOutput().neurons[i].biasWeight = getRandomAboveZero();
+            neuronet.getOutput().getNeurons()[i].setBiasWeight(getRandomAboveZero());
         }
     }
 
     private void initCenters() {
         for (int k = 0; k < neuronet.getHiddens().length; k++) {
-            for (int i = 0; i < neuronet.getHiddens()[k].neurons.length; i++) {
-                ((RBFNeuron) neuronet.getHiddens()[k].neurons[i]).center = Main.trainingSet[i].clone();
+            for (int i = 0; i < neuronet.getHiddens()[k].getNeurons().length; i++) {
+                ((RBFNeuron) neuronet.getHiddens()[k].getNeurons()[i]).setCenter(Main.trainingSet[i].clone());
             }
         }
     }

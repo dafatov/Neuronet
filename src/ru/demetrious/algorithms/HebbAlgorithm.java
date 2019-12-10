@@ -1,13 +1,19 @@
+package ru.demetrious.algorithms;
+
+import ru.demetrious.Main;
+import ru.demetrious.neuronet.INeuronet;
+import ru.demetrious.neuronet.Neuronet;
+
 import java.util.Arrays;
 
-class HebbAlgorithm implements IAlgorithm {
-    INeuronet neuronet;
+public class HebbAlgorithm implements IAlgorithm {
+    private INeuronet neuronet;
 
-    HebbAlgorithm(int inputs, double biasOutput, int outputs) {
+    public HebbAlgorithm(int inputs, double biasOutput, int outputs) {
         init(inputs, biasOutput, outputs);
     }
 
-    HebbAlgorithm(int inputs, int outputs) {
+    public HebbAlgorithm(int inputs, int outputs) {
         this(inputs, 0, outputs);
     }
 
@@ -52,15 +58,15 @@ class HebbAlgorithm implements IAlgorithm {
     }
 
     public boolean learn(double[] input, double[] ideal) {
-        if (neuronet.getInput().neurons.length == input.length &&
-                neuronet.getOutput().neurons.length == ideal.length) {
+        if (neuronet.getInput().getNeurons().length == input.length &&
+                neuronet.getOutput().getNeurons().length == ideal.length) {
             double[] result = step(input);
-            for (int i = 0; i < neuronet.getOutput().neurons.length; i++) {
+            for (int i = 0; i < neuronet.getOutput().getNeurons().length; i++) {
                 if (result[i] != ideal[i]) {
-                    for (int j = 0; j < neuronet.getOutput().neurons[i].weight.length; j++) {
-                        neuronet.getOutput().neurons[i].weight[j] += input[j] * ideal[i];
+                    for (int j = 0; j < neuronet.getOutput().getNeurons()[i].getWeight().length; j++) {
+                        neuronet.getOutput().getNeurons()[i].getWeight()[j] += input[j] * ideal[i];
                     }
-                    neuronet.getOutput().neurons[i].biasWeight -= ideal[i];
+                    neuronet.getOutput().getNeurons()[i].setBiasWeight(neuronet.getOutput().getNeurons()[i].getBiasWeight() - ideal[i]);
                 }
             }
         } else try {

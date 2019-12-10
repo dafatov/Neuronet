@@ -1,13 +1,20 @@
+package ru.demetrious.algorithms;
+
+import ru.demetrious.Main;
+import ru.demetrious.neuronet.INeuronet;
+import ru.demetrious.neuronet.KahonenNeuronet;
+import ru.demetrious.neuronet.Neuronet;
+
 import java.util.Arrays;
 
-class CounterAlgorithm implements IAlgorithm {
+public class CounterAlgorithm implements IAlgorithm {
     double LEARN_SCALE_K = .6;
     double LEARN_SCALE_G = .1;
-    INeuronet neuronetKahonen, neuronetGrossberg;
+    private INeuronet neuronetKahonen, neuronetGrossberg;
 
-    CounterAlgorithm(int inputs, Neuronet.HiddenLayerStruct hiddenLayerStruct, int outputs) {
-        neuronetKahonen = new KahonenNeuronet(this, inputs, hiddenLayerStruct.neurons);
-        neuronetGrossberg = new Neuronet(this, hiddenLayerStruct.neurons, outputs);
+    public CounterAlgorithm(int inputs, Neuronet.HiddenLayerStruct hiddenLayerStruct, int outputs) {
+        neuronetKahonen = new KahonenNeuronet(this, inputs, hiddenLayerStruct.getNeurons());
+        neuronetGrossberg = new Neuronet(this, hiddenLayerStruct.getNeurons(), outputs);
     }
 
     @Override
@@ -20,7 +27,7 @@ class CounterAlgorithm implements IAlgorithm {
                     Main.trainingSet,
                     new double[][]{{2, 1, 0, 0}, {0, 0, 0, 1}, {1, 0, 0, 0}, {0, 0, 1, 2}}, 0) {
                 @Override
-                void onEveryTraining() {
+                public void onEveryTraining() {
                     LEARN_SCALE_K *= 0.5;
                     LEARN_SCALE_G *= 0.5;
                 }
@@ -62,23 +69,23 @@ class CounterAlgorithm implements IAlgorithm {
 
     @Override
     public boolean learn(double[] input, double[] ideal) {
-        if (neuronetKahonen.getInput().neurons.length == input.length &&
-                neuronetGrossberg.getOutput().neurons.length == ideal.length) {
+        if (neuronetKahonen.getInput().getNeurons().length == input.length &&
+                neuronetGrossberg.getOutput().getNeurons().length == ideal.length) {
             double[] inputNormalized = normalize(input.clone());
 
             double[] result = step(inputNormalized);
             System.out.println(Arrays.toString(result) + ":" + LEARN_SCALE_K + ":" + LEARN_SCALE_G);
 
             if (LEARN_SCALE_K > 0 || LEARN_SCALE_G > 0) {
-                for (int i = 0; i < neuronetKahonen.getOutput().neurons.length; i++) {
-                    if (neuronetKahonen.getOutput().neurons[i].output == 1) {
-                        for (int j = 0; j < neuronetKahonen.getOutput().neurons[i].weight.length; j++) {
-                            neuronetKahonen.getOutput().neurons[i].weight[j] += LEARN_SCALE_K *
-                                    (inputNormalized[j] - neuronetKahonen.getOutput().neurons[i].weight[j]);
+                for (int i = 0; i < neuronetKahonen.getOutput().getNeurons().length; i++) {
+                    if (neuronetKahonen.getOutput().getNeurons()[i].getOutput() == 1) {
+                        for (int j = 0; j < neuronetKahonen.getOutput().getNeurons()[i].getWeight().length; j++) {
+                            neuronetKahonen.getOutput().getNeurons()[i].getWeight()[j] += LEARN_SCALE_K *
+                                    (inputNormalized[j] - neuronetKahonen.getOutput().getNeurons()[i].getWeight()[j]);
                         }
-                        for (int j = 0; j < neuronetGrossberg.getOutput().neurons.length; j++) {
-                            neuronetGrossberg.getOutput().neurons[j].weight[i] += LEARN_SCALE_G *
-                                    (ideal[j] - neuronetGrossberg.getOutput().neurons[j].weight[i]);
+                        for (int j = 0; j < neuronetGrossberg.getOutput().getNeurons().length; j++) {
+                            neuronetGrossberg.getOutput().getNeurons()[j].getWeight()[i] += LEARN_SCALE_G *
+                                    (ideal[j] - neuronetGrossberg.getOutput().getNeurons()[j].getWeight()[i]);
                         }
                     }
                 }
@@ -110,15 +117,11 @@ class CounterAlgorithm implements IAlgorithm {
     }
 
     private void initWeights(int n) {
-        for (int i = 0; i < neuronetKahonen.getOutput().neurons.length; i++) {
-            Arrays.fill(neuronetKahonen.getOutput().neurons[i].weight, 1 / Math.sqrt(n));
+        for (int i = 0; i < neuronetKahonen.getOutput().getNeurons().length; i++) {
+            Arrays.fill(neuronetKahonen.getOutput().getNeurons()[i].getWeight(), 1 / Math.sqrt(n));
         }
-        for (int i = 0; i < neuronetGrossberg.getOutput().neurons.length; i++) {
-            Arrays.fill(neuronetGrossberg.getOutput().neurons[i].weight, 1 / Math.sqrt(n));
+        for (int i = 0; i < neuronetGrossberg.getOutput().getNeurons().length; i++) {
+            Arrays.fill(neuronetGrossberg.getOutput().getNeurons()[i].getWeight(), 1 / Math.sqrt(n));
         }
-    }
-
-    private double randomInRange(double start, double end) {
-        return Math.random() * (end - start) + start;
     }
 }

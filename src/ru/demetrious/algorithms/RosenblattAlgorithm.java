@@ -1,3 +1,9 @@
+package ru.demetrious.algorithms;
+
+import ru.demetrious.Main;
+import ru.demetrious.neuronet.INeuronet;
+import ru.demetrious.neuronet.Neuronet;
+
 import java.util.Arrays;
 
 public class RosenblattAlgorithm implements IAlgorithm {
@@ -5,11 +11,11 @@ public class RosenblattAlgorithm implements IAlgorithm {
 
     private INeuronet neuronet;
 
-    RosenblattAlgorithm(int inputs, int outputs) {
+    public RosenblattAlgorithm(int inputs, int outputs) {
         this(inputs, 0, outputs);
     }
 
-    RosenblattAlgorithm(int inputs, int biasInput, int outputs) {
+    public RosenblattAlgorithm(int inputs, int biasInput, int outputs) {
         init(inputs, biasInput, outputs);
     }
 
@@ -77,19 +83,19 @@ public class RosenblattAlgorithm implements IAlgorithm {
 
     @Override
     public boolean learn(double[] input, double[] ideal) {
-        if (neuronet.getInput().neurons.length == input.length &&
-                neuronet.getOutput().neurons.length == ideal.length) {
+        if (neuronet.getInput().getNeurons().length == input.length &&
+                neuronet.getOutput().getNeurons().length == ideal.length) {
             double[] result = step(input);
             boolean error = false;
 
-            for (int i = 0; i < neuronet.getOutput().neurons.length; i++) {
+            for (int i = 0; i < neuronet.getOutput().getNeurons().length; i++) {
                 if (result[i] != ideal[i]) {
-                    for (int j = 0; j < neuronet.getOutput().neurons[i].weight.length; j++) {
-                        neuronet.getOutput().neurons[i].weight[j] +=
-                                ALPHA * neuronet.getOutput().neurons[i].input[j] * (ideal[i] - result[i]);
+                    for (int j = 0; j < neuronet.getOutput().getNeurons()[i].getWeight().length; j++) {
+                        neuronet.getOutput().getNeurons()[i].getWeight()[j] +=
+                                ALPHA * neuronet.getOutput().getNeurons()[i].getInput()[j] * (ideal[i] - result[i]);
                     }
-                    neuronet.getOutput().neurons[i].biasWeight +=
-                            ALPHA * neuronet.getOutput().neurons[i].biasInput * (ideal[i] - result[i]);
+                    neuronet.getOutput().getNeurons()[i].setBiasWeight(neuronet.getOutput().getNeurons()[i].getBiasWeight() +
+                            ALPHA * neuronet.getOutput().getNeurons()[i].getBiasInput() * (ideal[i] - result[i]));
                     error = true;
                 }
             }
