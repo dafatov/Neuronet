@@ -1,4 +1,5 @@
 # Project exclude paths
 /out/
 /data/Data.xcf
-/vpp/Neuronet.vpp.*
+/vpp/Neuronet.vpp*
+/vpproject/
