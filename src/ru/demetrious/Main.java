@@ -1,12 +1,11 @@
 package ru.demetrious;
 
-import ru.demetrious.algorithms.*;
-import ru.demetrious.neuronet.Neuronet;
+import ru.demetrious.algorithms.GeneticAlgorithm;
+import ru.demetrious.algorithms.IAlgorithm;
 import ru.demetrious.util.FileManager;
 import ru.demetrious.util.GUI;
 
 import java.awt.image.BufferedImage;
-import java.text.MessageFormat;
 
 public class Main {
     //System.exit(1000225);
@@ -16,69 +15,80 @@ public class Main {
 
     public static void main(String[] args) {
         StringBuilder stringBuilder = new StringBuilder();
+//
+//        /*Lab1*/
+//        stringBuilder.append("\nLab1\n");
+//        SimplePerceptron simplePerceptronOR0 = new SimplePerceptron(SimplePerceptron.LogicFunction.OR);
+//        stringBuilder.append(MessageFormat.format("0||0 = {0}", simplePerceptronOR0.calculate(0, 0))).append('\n');
+//        SimplePerceptron simplePerceptronOR1 = new SimplePerceptron(SimplePerceptron.LogicFunction.OR);
+//        stringBuilder.append(MessageFormat.format("0||1 = {0}", simplePerceptronOR1.calculate(0, 1))).append('\n');
+//        SimplePerceptron simplePerceptronOR2 = new SimplePerceptron(SimplePerceptron.LogicFunction.OR);
+//        stringBuilder.append(MessageFormat.format("1||0 = {0}", simplePerceptronOR2.calculate(1, 0))).append('\n');
+//        SimplePerceptron simplePerceptronOR3 = new SimplePerceptron(SimplePerceptron.LogicFunction.OR);
+//        stringBuilder.append(MessageFormat.format("1||1 = {0}", simplePerceptronOR3.calculate(1, 1))).append('\n');
+//
+//        /*Lab2*/
+//        stringBuilder.append("\nLab2\n");
+//        SimplePerceptron simplePerceptronNOT0 = new SimplePerceptron(SimplePerceptron.LogicFunction.NOT);
+//        stringBuilder.append(MessageFormat.format("!0 = {0}", simplePerceptronNOT0.calculate(0))).append('\n');
+//        SimplePerceptron simplePerceptronNOT1 = new SimplePerceptron(SimplePerceptron.LogicFunction.NOT);
+//        stringBuilder.append(MessageFormat.format("!1 = {0}", simplePerceptronNOT1.calculate(1))).append('\n');
+//
+//        /*Lab3*/
+//        stringBuilder.append("\nLab3\n");
+//        trainingSetNumbersInit();
+//        HebbAlgorithm hebbAlgorithm = new HebbAlgorithm(Main.trainingSet[0].length, Main.trainingSet.length);
+//        stringBuilder.append(hebbAlgorithm.launch(false));
+//
+//        /*Lab4*/
+//        stringBuilder.append("\nLab4\n");
+//        trainingSetLettersInit();
+//        RosenblattAlgorithm rosenblattAlgorithm = new RosenblattAlgorithm(Main.trainingSet[0].length, 1, Main.trainingSet.length);
+//        stringBuilder.append(rosenblattAlgorithm.launch(false));
+//
+//        /*Lab5*/
+//        stringBuilder.append("\nLab5\n");
+//        trainingSet = new double[][]{{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+//        BackpropagationAlgorithm backpropagationAlgorithm = new BackpropagationAlgorithm(2, 1,
+//                new Neuronet.HiddenLayerStruct[]{new Neuronet.HiddenLayerStruct(100, -1),
+//                        new Neuronet.HiddenLayerStruct(100, 1)}, 1);
+//        stringBuilder.append(backpropagationAlgorithm.launch(false));
+//
+//        /*Lab6*/
+//        stringBuilder.append("\nLab6\n");
+//        trainingSet = new double[][]{{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+//        RBFAlgorithm rbfAlgorithm = new RBFAlgorithm(2, new Neuronet.HiddenLayerStruct(4), 1);
+//        stringBuilder.append(rbfAlgorithm.launch(false));
+//
+//        /*Lab7*/
+//        stringBuilder.append("\nLab7\n");
+//        trainingSet = new double[][]{{1, 1, 0, 0}, {0, 0, 0, 1}, {1, 0, 0, 0}, {0, 0, 1, 1}};
+//        KahonenAlgorithm kahonenAlgorithm = new KahonenAlgorithm(4, 2);
+//        stringBuilder.append(kahonenAlgorithm.launch(false));
+//
+//        /*Lab8*/
+//        stringBuilder.append("\nLab8\n");
+//        trainingSet = new double[][]{{1, 1, 0, 0}, {0, 0, 0, 1}, {1, 0, 0, 0}, {0, 0, 1, 1}};
+//        CounterAlgorithm counterAlgorithm = new CounterAlgorithm(4,
+//                new Neuronet.HiddenLayerStruct(3), 4);
+//        stringBuilder.append(counterAlgorithm.launch(false));
+//
+//        /*Lab9*/
+//        stringBuilder.append("\nLab9\n");
+//        trainingSet = new double[][]{{-1, 1, -1, 1}, {1, -1, 1, 1}, {-1, 1, -1, -1}};
+//        HopfieldAlgorithm hopfieldAlgorithm = new HopfieldAlgorithm(trainingSet[0].length);
+//        stringBuilder.append(hopfieldAlgorithm.launch(false));
 
-        /*Lab1*/
-        stringBuilder.append("\nLab1\n");
-        SimplePerceptron simplePerceptronOR0 = new SimplePerceptron(SimplePerceptron.LogicFunction.OR);
-        stringBuilder.append(MessageFormat.format("0||0 = {0}", simplePerceptronOR0.calculate(0, 0))).append('\n');
-        SimplePerceptron simplePerceptronOR1 = new SimplePerceptron(SimplePerceptron.LogicFunction.OR);
-        stringBuilder.append(MessageFormat.format("0||1 = {0}", simplePerceptronOR1.calculate(0, 1))).append('\n');
-        SimplePerceptron simplePerceptronOR2 = new SimplePerceptron(SimplePerceptron.LogicFunction.OR);
-        stringBuilder.append(MessageFormat.format("1||0 = {0}", simplePerceptronOR2.calculate(1, 0))).append('\n');
-        SimplePerceptron simplePerceptronOR3 = new SimplePerceptron(SimplePerceptron.LogicFunction.OR);
-        stringBuilder.append(MessageFormat.format("1||1 = {0}", simplePerceptronOR3.calculate(1, 1))).append('\n');
-
-        /*Lab2*/
-        stringBuilder.append("\nLab2\n");
-        SimplePerceptron simplePerceptronNOT0 = new SimplePerceptron(SimplePerceptron.LogicFunction.NOT);
-        stringBuilder.append(MessageFormat.format("!0 = {0}", simplePerceptronNOT0.calculate(0))).append('\n');
-        SimplePerceptron simplePerceptronNOT1 = new SimplePerceptron(SimplePerceptron.LogicFunction.NOT);
-        stringBuilder.append(MessageFormat.format("!1 = {0}", simplePerceptronNOT1.calculate(1))).append('\n');
-
-        /*Lab3*/
-        stringBuilder.append("\nLab3\n");
-        trainingSetNumbersInit();
-        HebbAlgorithm hebbAlgorithm = new HebbAlgorithm(Main.trainingSet[0].length, Main.trainingSet.length);
-        stringBuilder.append(hebbAlgorithm.launch(false));
-
-        /*Lab4*/
-        stringBuilder.append("\nLab4\n");
-        trainingSetLettersInit();
-        RosenblattAlgorithm rosenblattAlgorithm = new RosenblattAlgorithm(Main.trainingSet[0].length, 1, Main.trainingSet.length);
-        stringBuilder.append(rosenblattAlgorithm.launch(false));
-
-        /*Lab5*/
-        stringBuilder.append("\nLab5\n");
-        trainingSet = new double[][]{{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
-        BackpropagationAlgorithm backpropagationAlgorithm = new BackpropagationAlgorithm(2, 1,
-                new Neuronet.HiddenLayerStruct[]{new Neuronet.HiddenLayerStruct(100, -1),
-                        new Neuronet.HiddenLayerStruct(100, 1)}, 1);
-        stringBuilder.append(backpropagationAlgorithm.launch(false));
-
-        /*Lab6*/
-        stringBuilder.append("\nLab6\n");
-        trainingSet = new double[][]{{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
-        RBFAlgorithm rbfAlgorithm = new RBFAlgorithm(2, new Neuronet.HiddenLayerStruct(4), 1);
-        stringBuilder.append(rbfAlgorithm.launch(false));
-
-        /*Lab7*/
-        stringBuilder.append("\nLab7\n");
-        trainingSet = new double[][]{{1, 1, 0, 0}, {0, 0, 0, 1}, {1, 0, 0, 0}, {0, 0, 1, 1}};
-        KahonenAlgorithm kahonenAlgorithm = new KahonenAlgorithm(4, 2);
-        stringBuilder.append(kahonenAlgorithm.launch(false));
-
-        /*Lab8*/
-        stringBuilder.append("\nLab8\n");
-        trainingSet = new double[][]{{1, 1, 0, 0}, {0, 0, 0, 1}, {1, 0, 0, 0}, {0, 0, 1, 1}};
-        CounterAlgorithm counterAlgorithm = new CounterAlgorithm(4,
-                new Neuronet.HiddenLayerStruct(3), 4);
-        stringBuilder.append(counterAlgorithm.launch(false));
-
-        /*Lab9*/
-        stringBuilder.append("\nLab9\n");
-        trainingSet = new double[][]{{-1, 1, -1, 1}, {1, -1, 1, 1}, {-1, 1, -1, -1}};
-        HopfieldAlgorithm hopfieldAlgorithm = new HopfieldAlgorithm(trainingSet[0].length);
-        stringBuilder.append(hopfieldAlgorithm.launch(false));
+        /*Lab11*/
+        stringBuilder.append("\nLab11\n");
+        GeneticAlgorithm geneticAlgorithm =
+                new GeneticAlgorithm(50, 3, -13) {
+                    @Override
+                    public int function(int... values) {
+                        return values[0] * values[2] + 99 * values[1] + 13 * values[2];
+                    }
+                };
+        stringBuilder.append(geneticAlgorithm.launch());
 
         System.out.println(stringBuilder.toString());
     }
