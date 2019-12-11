@@ -51,7 +51,7 @@ public class FuzzyLogic {
     public StringBuilder launch() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        solve("F*G", "~F*H", "A@B");
+        solve("A*B", "~A*C", "D@E");
 
         for (Character character : resultQueue) {
             stringBuilder.append("Matrix ").append(character).append(":\n");

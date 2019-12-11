@@ -92,12 +92,15 @@ public class Main {
 
         /*Lab10 after Lab12*/
 
-        /*Lab11*//*Для наглядной проверки результата была решена та же задача, что и в примере:
-                    F = южане; G = жаркий климат; H = умеренный; R@S = ?, где @ - операция свертки*/
+        /*Lab11*//*U - множество разных национальностей: русский(1), француз(2), алжирец(3), американец(4)
+                    V - множество различной еды: борщ(1), лягушачьи лапки(2), онигири(3), бургер(4)
+                    A = европеец = 0.7/1 + 1/2 + 0.2/3 + 0/4
+                    B = калорийная = 0.8/1 + 0.2/2 + 0.6/3 + 1/4
+                    C = горящая пища = 1/1 + 0.3/2 + 0/3 + 0.8/4*/
         stringBuilder.append("\nLab11\n");
-        FuzzyLogic fuzzyLogic = new FuzzyLogic(new FuzzyLogic.FuzzySetStruct('F', .9, .6, .3, 1),
-                new FuzzyLogic.FuzzySetStruct('G', .5, .3, .9, 1),
-                new FuzzyLogic.FuzzySetStruct('H', 1, .6, .2, 0));
+        FuzzyLogic fuzzyLogic = new FuzzyLogic(new FuzzyLogic.FuzzySetStruct('A', .7, 1, .2, 0),
+                new FuzzyLogic.FuzzySetStruct('B', .8, .2, .6, 1),
+                new FuzzyLogic.FuzzySetStruct('C', 1, .3, 0, .8));
         stringBuilder.append(fuzzyLogic.launch());
 
         /*Lab12*//*Применение генетического алгоритма для решения Диофантовых уравнений
