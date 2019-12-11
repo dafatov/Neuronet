@@ -80,6 +80,8 @@ public class Main {
         HopfieldAlgorithm hopfieldAlgorithm = new HopfieldAlgorithm(trainingSet[0].length);
         stringBuilder.append(hopfieldAlgorithm.launch(false));
 
+        /*Lab10 after Lab12*/
+
         /*Lab11*/
         stringBuilder.append("\nLab11\n");
         FuzzyLogic fuzzyLogic = new FuzzyLogic(new FuzzyLogic.FuzzySetStruct('F', .9, .6, .3, 1),
@@ -102,6 +104,11 @@ public class Main {
                 };
         stringBuilder.append(geneticAlgorithm.launch());
 
+        /*Lab10*//*Run separately from the rest cause flood log*/
+        stringBuilder.append("\nLab10\n");
+        ConvolutionalNeuronet convolutionalNeuronet = new ConvolutionalNeuronet();
+        convolutionalNeuronet.learn(false);
+
         System.out.println(stringBuilder.toString());
     }
 
@@ -109,7 +116,7 @@ public class Main {
         Main.trainingSet = new double[10][35];
         for (int i = 0; i < 10; i++) {
             BufferedImage tmp = FileManager.readImage("D:\\YandexDisk\\MyProjects\\Idea\\Neuronet\\" +
-                    "data\\Data_" + i + ".png");
+                    "data\\numbers\\Data_" + i + ".png");
             for (int j = 0; j < tmp.getHeight() * tmp.getWidth(); j++) {
                 Main.trainingSet[i][j] = tmp.getRGB(j % tmp.getWidth(), j / tmp.getWidth()) == -1 ? -1 : 1;
             }
@@ -120,7 +127,7 @@ public class Main {
         Main.trainingSet = new double[26][35];
         for (int i = 0; i < 26; i++) {
             BufferedImage tmp = FileManager.readImage("D:\\YandexDisk\\MyProjects\\Idea\\Neuronet\\" +
-                    "data\\Data_" + ALPHABET[i] + ".png");
+                    "data\\letters\\Data_" + ALPHABET[i] + ".png");
             for (int j = 0; j < tmp.getHeight() * tmp.getWidth(); j++) {
                 Main.trainingSet[i][j] = tmp.getRGB(j % tmp.getWidth(), j / tmp.getWidth()) == -1 ? -1 : 1;
             }
