@@ -6,6 +6,12 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class FileManager {
+    /**
+     * Read image from file as Buffered Image
+     *
+     * @param path Path in string format
+     * @return Return Buffered Image object
+     */
     public static BufferedImage readImage(String path) {
         try {
             return ImageIO.read(new File(path));
@@ -16,6 +22,15 @@ public class FileManager {
         return null;
     }
 
+    /**
+     * Write string into a file; if file or directories are not exist - create them
+     *
+     * @param path   Path in string format
+     * @param string String what to write
+     * @param append Whether to continue recording the file.
+     *               If false file will be overwrite
+     * @return Returns true if written successfully
+     */
     public static boolean write(String path, String string, boolean append) {
         if (!new File(path).exists()) {
             if (!createFile(path)) return false;
@@ -31,6 +46,12 @@ public class FileManager {
         }
     }
 
+    /**
+     * Read file as string array list
+     *
+     * @param path Path in string format
+     * @return Return string array list
+     */
     public static ArrayList<String> read(String path) {
         ArrayList<String> strings = new ArrayList<>();
 
@@ -50,6 +71,12 @@ public class FileManager {
         return strings;
     }
 
+    /**
+     * Create file if file or directory are not exist
+     *
+     * @param path Path in string format
+     * @return Return true if file created
+     */
     public static boolean createFile(String path) {
         String[] tmp = path.split("\\\\");
         String fileName = tmp[tmp.length - 1];

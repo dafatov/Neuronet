@@ -14,6 +14,9 @@ public class GUI extends JFrame {
         init();
     }
 
+    /**
+     * Creation of GUI
+     */
     private void init() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -66,6 +69,11 @@ public class GUI extends JFrame {
                 Toolkit.getDefaultToolkit().getScreenSize().height / 4);
     }
 
+    /**
+     * Change progress bar status
+     *
+     * @param value new Value of progress bar status
+     */
     public void setProgress(int value) {
         StringBuilder tmp = new StringBuilder();
 

@@ -13,6 +13,13 @@ public class RBFLayer extends HiddenLayer {
         super(iAlgorithm, neurons);
     }
 
+    /**
+     * Replaces the using neurons with RBFNeuron.
+     * Needs for another calculation logic
+     *
+     * @param previous Previous layer
+     * @param next     Next layer
+     */
     @Override
     public void link(Layer previous, Layer next) {
         this.setPrevious(previous);

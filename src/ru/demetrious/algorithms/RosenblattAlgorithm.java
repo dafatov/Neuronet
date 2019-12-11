@@ -11,14 +11,34 @@ public class RosenblattAlgorithm implements IAlgorithm {
 
     private INeuronet neuronet;
 
+    /**
+     * Constructor of Roseblatt algorithm
+     *
+     * @param inputs  Count of inputs
+     * @param outputs Count of outputs
+     */
     public RosenblattAlgorithm(int inputs, int outputs) {
         this(inputs, 0, outputs);
     }
 
+    /**
+     * Constructor of Roseblatt algorithm
+     *
+     * @param inputs    Count of inputs
+     * @param biasInput Input of bias neuron on the input layer
+     * @param outputs   Count of outputs
+     */
     public RosenblattAlgorithm(int inputs, int biasInput, int outputs) {
         init(inputs, biasInput, outputs);
     }
 
+    /**
+     * Initialization of neural network
+     *
+     * @param inputs    Count of inputs
+     * @param biasInput Input of bias neuron on the input layer
+     * @param outputs   Count of outputs
+     */
     private void init(int inputs, double biasInput, int outputs) {
         neuronet = new Neuronet(this, inputs, biasInput, outputs);
     }

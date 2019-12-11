@@ -9,10 +9,22 @@ public class SimplePerceptron implements IAlgorithm {
     private LogicFunction logicFunction;
     private INeuronet neuronet;
 
+    /**
+     * Constructor of this class
+     *
+     * @param logicFunction Used logical function:
+     *                      - OR
+     *                      - NOT
+     */
     public SimplePerceptron(LogicFunction logicFunction) {
         init(logicFunction);
     }
 
+    /**
+     * Initialization algorithm
+     *
+     * @param logicFunction Used logical function
+     */
     private void init(LogicFunction logicFunction) {
         this.logicFunction = logicFunction;
         switch (this.logicFunction) {
@@ -40,6 +52,13 @@ public class SimplePerceptron implements IAlgorithm {
         }
     }
 
+    /**
+     * Calculate output for function OR
+     *
+     * @param x1 First binary operand
+     * @param x2 Second binary operand
+     * @return Binary result
+     */
     public int calculate(int x1, int x2) {
         if (logicFunction.equals(LogicFunction.OR)) {
             if ((x1 == 0 || x1 == 1) && (x2 == 0 || x2 == 1)) {
@@ -62,6 +81,12 @@ public class SimplePerceptron implements IAlgorithm {
         return -1;
     }
 
+    /**
+     * Calculate output for function NOT
+     *
+     * @param x Binary operand
+     * @return Binary result
+     */
     public int calculate(int x) {
         if (logicFunction.equals(LogicFunction.NOT)) {
             if (x == 0 || x == 1) {
@@ -83,6 +108,12 @@ public class SimplePerceptron implements IAlgorithm {
         return -1;
     }
 
+    /**
+     * Binary step activation function
+     *
+     * @param x Input
+     * @return Output
+     */
     @Override
     public double activationFunction(double x) {
         return x > 0 ? 1. : 0.;
@@ -111,6 +142,9 @@ public class SimplePerceptron implements IAlgorithm {
         return true;
     }
 
+    /**
+     * Types of logic functions
+     */
     public enum LogicFunction {
         OR, NOT
     }

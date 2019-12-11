@@ -11,6 +11,9 @@ public class ConvolutionalNeuronet {
         init();
     }
 
+    /**
+     * Initialization of convolutional neural network from lib
+     */
     private void init() {
         CNN.LayerBuilder builder = new CNN.LayerBuilder();
         builder.addLayer(Layer.buildInputLayer(new Layer.Size(28, 28)));
@@ -22,7 +25,11 @@ public class ConvolutionalNeuronet {
         cnn = new CNN(builder, 50);
     }
 
-    public void learn(boolean learn) {
+    /**
+     * Execution of the specified task for the current algorithm
+     * The source and target data are specified here
+     */
+    public void launch(boolean learn) {
         if (learn) {
             String fileName = "data/mnist/train.format";
             Dataset dataset = Dataset.load(fileName, ",", 784);
@@ -35,6 +42,7 @@ public class ConvolutionalNeuronet {
         }
 
         Dataset testset = Dataset.load("data/mnist/test.format", ",", -1);
+        assert testset != null;
         cnn.predict(testset, "data/mnist/test.predict");
     }
 }

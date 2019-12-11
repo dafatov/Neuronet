@@ -13,6 +13,9 @@ public class InputLayer extends Layer {
         super(iAlgorithm, neurons, biasOutput);
     }
 
+    /**
+     * The input layer cannot calculate so we process the error
+     */
     @Override
     public void calculate() {
         try {
@@ -23,10 +26,16 @@ public class InputLayer extends Layer {
         }
     }
 
+    /**
+     * The input layer cannot adjustment so we ignored
+     */
     @Override
     public void adjustment() {
     }
 
+    /**
+     * The input layer don't have previous layer so we process the error
+     */
     @Override
     public void link(Layer previous, Layer next) {
         try {
@@ -37,6 +46,11 @@ public class InputLayer extends Layer {
         }
     }
 
+    /**
+     * Link input layer to next
+     *
+     * @param next Next layer
+     */
     public void link(Layer next) {
         super.setNext(next);
         for (int i = 0; i < getNeurons().length; i++) {

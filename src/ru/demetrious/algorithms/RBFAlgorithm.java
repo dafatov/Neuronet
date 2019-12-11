@@ -13,14 +13,37 @@ public class RBFAlgorithm implements IAlgorithm {
     final double ERROR = 0.01;
     private INeuronet neuronet;
 
+    /**
+     * Constructor of RBF algorithm with hidden layer and bias neuron
+     *
+     * @param inputs            Count of inputs
+     * @param biasInput         Input of bias neuron on the input layer
+     * @param hiddenLayerStruct Hidden layer structure
+     * @param outputs           Count of outputs
+     */
     public RBFAlgorithm(int inputs, double biasInput, Neuronet.HiddenLayerStruct hiddenLayerStruct, int outputs) {
         init(inputs, biasInput, hiddenLayerStruct, outputs);
     }
 
+    /**
+     * Constructor of RBF algorithm with hidden layer
+     *
+     * @param inputs            Count of inputs
+     * @param hiddenLayerStruct Hidden layer structure
+     * @param outputs           Count of outputs
+     */
     public RBFAlgorithm(int inputs, Neuronet.HiddenLayerStruct hiddenLayerStruct, int outputs) {
         this(inputs, 0, hiddenLayerStruct, outputs);
     }
 
+    /**
+     * Initialization of RBF neural network with hidden layers and bias neuron
+     *
+     * @param inputs            Count of inputs
+     * @param biasInput         Input of bias neuron on the input layer
+     * @param hiddenLayerStruct Hidden layer structure
+     * @param outputs           Count of outputs
+     */
     private void init(int inputs, double biasInput, Neuronet.HiddenLayerStruct hiddenLayerStruct, int outputs) {
         neuronet = new RBFNeuronet(this, inputs, biasInput, new Neuronet.HiddenLayerStruct[]{hiddenLayerStruct}, outputs);
     }
@@ -94,6 +117,9 @@ public class RBFAlgorithm implements IAlgorithm {
         return 2 / (1 + Math.exp(-x)) - 1;
     }
 
+    /**
+     * Initialization of weights for each link between neurons as random value above zero
+     */
     private void initWeights() {
         for (int k = 0; k < neuronet.getHiddens().length; k++) {
             for (int i = 0; i < neuronet.getHiddens()[k].getNeurons().length; i++) {
@@ -111,6 +137,9 @@ public class RBFAlgorithm implements IAlgorithm {
         }
     }
 
+    /**
+     * Initialization of centers for each RBF neurons as training data element
+     */
     private void initCenters() {
         for (int k = 0; k < neuronet.getHiddens().length; k++) {
             for (int i = 0; i < neuronet.getHiddens()[k].getNeurons().length; i++) {
@@ -119,6 +148,11 @@ public class RBFAlgorithm implements IAlgorithm {
         }
     }
 
+    /**
+     * Get random double from -5 to 5
+     *
+     * @return Return random value in range -5;5
+     */
     private double getRandomAboveZero() {
         double random = 10 * Math.random();
         return -5 + random;

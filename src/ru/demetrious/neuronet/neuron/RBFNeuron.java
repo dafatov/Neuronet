@@ -19,10 +19,18 @@ public class RBFNeuron extends Neuron {
         this.center = center;
     }
 
+    /**
+     * Initialization center array
+     *
+     * @param inputs Count of inputs
+     */
     private void init(int inputs) {
         setCenter(new double[inputs]);
     }
 
+    /**
+     * Changed the way to count the output of a neuron
+     */
     @Override
     public void calculate() {
         setOutput(0);
@@ -33,6 +41,9 @@ public class RBFNeuron extends Neuron {
         normalize();
     }
 
+    /**
+     * The method of processing the result of counting has been changed
+     */
     @Override
     void normalize() {
         setOutput(Math.exp(-getOutput() / (2 * Math.pow(((RBFAlgorithm) getiAlgorithm()).WIDTH, 2))));

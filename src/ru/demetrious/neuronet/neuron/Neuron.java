@@ -71,6 +71,9 @@ public class Neuron {
         }
     }
 
+    /**
+     * Calculate output of neuron
+     */
     public void calculate() {
         setOutput(0);
         for (int i = 0; i < getInput().length; i++) {
@@ -80,6 +83,9 @@ public class Neuron {
         normalize();
     }
 
+    /**
+     * An activation function of the algorithm used is used
+     */
     void normalize() {
         setOutput(getiAlgorithm().activationFunction(getOutput()));
     }

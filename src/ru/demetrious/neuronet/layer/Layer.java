@@ -22,14 +22,30 @@ public abstract class Layer {
         this(iAlgorithm, neurons, 0);
     }
 
+    /**
+     * Initialization of bias neuron
+     *
+     * @param biasOutput Bias output
+     */
     void initBias(double biasOutput) {
         setBiasNeuron(new BiasNeuron(getiAlgorithm(), biasOutput));
     }
 
+    /**
+     * Initialization layer
+     *
+     * @param neurons Count of neurons
+     */
     void init(int neurons) {
         this.setNeurons(new Neuron[neurons]);
     }
 
+    /**
+     * Link layer with previous and next
+     *
+     * @param previous Previous layer
+     * @param next     Next layer
+     */
     public void link(Layer previous, Layer next) {
         this.setPrevious(previous);
         this.setNext(next);
@@ -38,6 +54,11 @@ public abstract class Layer {
         }
     }
 
+    /**
+     * Gets for each connection the input output of neurons of the previous layer
+     * then transmits output for each neuron of this layer
+     * and call this method on the next layer
+     */
     public void calculate() {
         for (Neuron neuron : getNeurons()) {
             for (int j = 0; j < getPrevious().getNeurons().length; j++) {
@@ -51,6 +72,11 @@ public abstract class Layer {
         }
     }
 
+    /**
+     * Calculates delta for each neuron on this layer,
+     * adjusts weights for each neuron on next layer with delta on this layer
+     * and calls this method on previous layer
+     */
     public void adjustment() {
         for (int i = 0; i < getNeurons().length; i++) {
             getNeurons()[i].setDelta(0);

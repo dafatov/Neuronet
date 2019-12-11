@@ -10,6 +10,11 @@ public class FuzzyLogic {
     private ArrayList<Character> resultQueue;
     private int letterIterator = 0;
 
+    /**
+     * Constructor Fuzzy logic
+     *
+     * @param fuzzySetStructs The set of rows of the matrices
+     */
     public FuzzyLogic(FuzzySetStruct... fuzzySetStructs) {
         init();
         for (FuzzySetStruct fuzzySetStruct : fuzzySetStructs) {
@@ -17,6 +22,11 @@ public class FuzzyLogic {
         }
     }
 
+    /**
+     * Constructor Fuzzy logic
+     *
+     * @param fuzzyMatrixStructs The set of matrices
+     */
     public FuzzyLogic(FuzzyMatrixStruct... fuzzyMatrixStructs) {
         init();
         for (FuzzyMatrixStruct fuzzyMatrixStruct : fuzzyMatrixStructs) {
@@ -24,11 +34,20 @@ public class FuzzyLogic {
         }
     }
 
+    /**
+     * Initialization of arrays
+     */
     private void init() {
         fuzzySets = new HashMap<>();
         resultQueue = new ArrayList<>();
     }
 
+    /**
+     * Execution of the specified task for the current algorithm
+     * The source and target data are specified here
+     *
+     * @return StringBuilder containing sources and results of the algorithm
+     */
     public StringBuilder launch() {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -41,12 +60,22 @@ public class FuzzyLogic {
         return stringBuilder;
     }
 
+    /**
+     * Finding a solution of rules set
+     *
+     * @param rules A set of rules
+     */
     public void solve(String... rules) {
         for (String rule : rules) {
             parse(rule);
         }
     }
 
+    /**
+     * Parse each rule
+     *
+     * @param rule entered rule in "^~?[A-Z]([*@])~?[A-Z]$" regex format
+     */
     private void parse(String rule) {
         if (!rule.matches(REGEX)) {
             try {
@@ -72,6 +101,12 @@ public class FuzzyLogic {
         }
     }
 
+    /**
+     * Reverse matrix; each element x = 1 - x
+     *
+     * @param matrix Matrix
+     * @return Reverse matrix
+     */
     private double[][] reverse(double[][] matrix) {
         double[][] result = new double[matrix.length][matrix[0].length];
 
@@ -83,6 +118,15 @@ public class FuzzyLogic {
         return result;
     }
 
+    /**
+     * Execute operation on two operands
+     *
+     * @param operation Operations are:
+     *                  '*' = multiply
+     *                  '@' = composition
+     * @param first     First operand
+     * @param second    Second operand
+     */
     private void execute(char operation, double[][] first, double[][] second) {
         if (first == null || second == null) {
             try {
@@ -109,10 +153,23 @@ public class FuzzyLogic {
         }
     }
 
+    /**
+     * Multiply two matrices
+     *
+     * @param x First operand
+     * @param y Second operand
+     * @return Result
+     */
     private double[][] multiply(double[][] x, double[][] y) {
         return composition(transpose(x), y);
     }
 
+    /**
+     * Transpose matrix
+     *
+     * @param matrix Operand
+     * @return Result
+     */
     private double[][] transpose(double[][] matrix) {
         double[][] result = new double[matrix[0].length][matrix.length];
 
@@ -124,6 +181,13 @@ public class FuzzyLogic {
         return result;
     }
 
+    /**
+     * Composition two matrices
+     *
+     * @param x First operand
+     * @param y Second operand
+     * @return Result
+     */
     private double[][] composition(double[][] x, double[][] y) {
         double[][] result = new double[x.length][y[0].length];
 
@@ -140,6 +204,11 @@ public class FuzzyLogic {
         return result;
     }
 
+    /**
+     * Looks for a free letter for names
+     *
+     * @return Returns the found letter
+     */
     private char getLetter() {
         while (fuzzySets.containsKey(Main.ALPHABET[letterIterator])) {
             letterIterator++;
@@ -147,6 +216,9 @@ public class FuzzyLogic {
         return Main.ALPHABET[letterIterator];
     }
 
+    /**
+     * Structure of named single row
+     */
     public static class FuzzySetStruct {
         private char letter;
         private double[] fuzzySet;
@@ -157,6 +229,9 @@ public class FuzzyLogic {
         }
     }
 
+    /**
+     * Structure of named matrix
+     */
     public static class FuzzyMatrixStruct {
         private char letter;
         private double[][] fuzzySetStructs;
@@ -170,6 +245,11 @@ public class FuzzyLogic {
             this.fuzzySetStructs = fuzzySetStructs;
         }
 
+        /**
+         * Convert object to string
+         *
+         * @return Matrix as a table
+         */
         @Override
         public String toString() {
             StringBuilder stringBuilder = new StringBuilder();

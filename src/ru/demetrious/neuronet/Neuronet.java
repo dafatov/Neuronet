@@ -14,24 +14,64 @@ public class Neuronet implements INeuronet {
     private HiddenLayer[] hiddenLayers;
     private OutputLayer output;
 
+    /**
+     * Constructor of neural network with hidden layers and bias neuron
+     *
+     * @param iAlgorithm         Using algorithm from algorithms package
+     * @param inputs             Count of inputs
+     * @param biasInput          Input of bias neuron on the input layer
+     * @param hiddenLayerStructs Hidden layer structure array
+     * @param outputs            Count of outputs
+     */
     public Neuronet(IAlgorithm iAlgorithm, int inputs, double biasInput, HiddenLayerStruct[] hiddenLayerStructs, int outputs) {
         this.setiAlgorithm(iAlgorithm);
         init(inputs, biasInput, hiddenLayerStructs, outputs);
     }
 
+    /**
+     * Constructor of neural network with hidden layers
+     *
+     * @param iAlgorithm         Using algorithm from algorithms package
+     * @param inputs             Count of inputs
+     * @param hiddenLayerStructs Hidden layer structure array
+     * @param outputs            Count of outputs
+     */
     public Neuronet(IAlgorithm iAlgorithm, int inputs, HiddenLayerStruct[] hiddenLayerStructs, int outputs) {
         this(iAlgorithm, inputs, 0, hiddenLayerStructs, outputs);
     }
 
+    /**
+     * Constructor of neural network with bias neuron
+     *
+     * @param iAlgorithm Using algorithm from algorithms package
+     * @param inputs     Count of inputs
+     * @param biasInput  Input of bias neuron on the input layer
+     * @param outputs    Count of outputs
+     */
     public Neuronet(IAlgorithm iAlgorithm, int inputs, double biasInput, int outputs) {
         this.setiAlgorithm(iAlgorithm);
         init(inputs, biasInput, outputs);
     }
 
+    /**
+     * Constructor of neural network
+     *
+     * @param iAlgorithm Using algorithm from algorithms package
+     * @param inputs     Count of inputs
+     * @param outputs    Count of outputs
+     */
     public Neuronet(IAlgorithm iAlgorithm, int inputs, int outputs) {
         this(iAlgorithm, inputs, 0, outputs);
     }
 
+    /**
+     * Initialization neural network with hidden layers and bias neuron
+     *
+     * @param inputs             Count of inputs
+     * @param biasInput          Input of bias neuron on the input layer
+     * @param hiddenLayerStructs Hidden layer structure array
+     * @param outputs            Count of outputs
+     */
     private void init(int inputs, double biasInput, HiddenLayerStruct[] hiddenLayerStructs, int outputs) {
         if (hiddenLayerStructs == null || hiddenLayerStructs.length == 0) {
             init(inputs, biasInput, outputs);
@@ -51,10 +91,21 @@ public class Neuronet implements INeuronet {
         getOutput().link(getHiddenLayers()[getHiddenLayers().length - 1]);
     }
 
+    /**
+     * Initialization input layer
+     *
+     * @param inputs    Count of inputs
+     * @param biasInput Input of bias neuron on the input layer
+     */
     void initInputLayer(int inputs, double biasInput) {
         setInput(new InputLayer(getiAlgorithm(), inputs, biasInput));
     }
 
+    /**
+     * Initialization hidden layers
+     *
+     * @param hiddenLayerStructs Hidden layer structure array
+     */
     void initHiddenLayer(HiddenLayerStruct[] hiddenLayerStructs) {
         setHiddenLayers(new HiddenLayer[hiddenLayerStructs.length]);
         for (int i = 0; i < getHiddenLayers().length; i++) {
@@ -62,10 +113,22 @@ public class Neuronet implements INeuronet {
         }
     }
 
+    /**
+     * Initialization output layer
+     *
+     * @param outputs Count of outputs
+     */
     void initOutputLayer(int outputs) {
         setOutput(new OutputLayer(getiAlgorithm(), outputs));
     }
 
+    /**
+     * Initialization neural network with bias neuron
+     *
+     * @param inputs    Count of inputs
+     * @param biasInput Input of bias neuron on the input layer
+     * @param outputs   Count of outputs
+     */
     private void init(int inputs, double biasInput, int outputs) {
         initInputLayer(inputs, biasInput);
         initOutputLayer(outputs);
@@ -234,6 +297,9 @@ public class Neuronet implements INeuronet {
         this.hiddenLayers = hiddenLayers;
     }
 
+    /**
+     * Hidden layer structure
+     */
     public static class HiddenLayerStruct {
         private int neurons;
         private double biasHidden;

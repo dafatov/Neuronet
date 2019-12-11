@@ -11,6 +11,11 @@ public class HopfieldAlgorithm implements IAlgorithm {
     final int STEP_COUNTER = 1000;
     private INeuronet neuronet;
 
+    /**
+     * Initialization of Hopfield neural network and his algorithm
+     *
+     * @param inputs Count of inputs
+     */
     public HopfieldAlgorithm(int inputs) {
         neuronet = new Neuronet(this, inputs, inputs);
     }

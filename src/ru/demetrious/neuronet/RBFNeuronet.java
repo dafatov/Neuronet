@@ -21,6 +21,12 @@ public class RBFNeuronet extends Neuronet {
         super(iAlgorithm, inputs, outputs);
     }
 
+    /**
+     * Replaces the hidden layer with RBFLayer.
+     * Needs for another calculation logic
+     *
+     * @param hiddenLayerStructs Structure of hiddenLayer
+     */
     @Override
     void initHiddenLayer(HiddenLayerStruct[] hiddenLayerStructs) {
         setHiddenLayers(new RBFLayer[hiddenLayerStructs.length]);

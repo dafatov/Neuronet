@@ -11,22 +11,58 @@ public class BackpropagationAlgorithm implements IAlgorithm {
     final double ERROR = 0.01;
     private INeuronet neuronet;
 
+    /**
+     * Constructor of back propagation algorithm with hidden layers and bias neuron
+     *
+     * @param inputs             Count of inputs
+     * @param biasInput          Input of bias neuron on the input layer
+     * @param hiddenLayerStructs Hidden layer structure array
+     * @param outputs            Count of outputs
+     */
     public BackpropagationAlgorithm(int inputs, double biasInput, Neuronet.HiddenLayerStruct[] hiddenLayerStructs, int outputs) {
         init(inputs, biasInput, hiddenLayerStructs, outputs);
     }
 
+    /**
+     * Constructor of back propagation algorithm with hidden layers
+     *
+     * @param inputs             Count of inputs
+     * @param hiddenLayerStructs Hidden layer structure array
+     * @param outputs            Count of outputs
+     */
     public BackpropagationAlgorithm(int inputs, Neuronet.HiddenLayerStruct[] hiddenLayerStructs, int outputs) {
         this(inputs, 0, hiddenLayerStructs, outputs);
     }
 
+    /**
+     * Constructor of back propagation algorithm with bias neuron
+     *
+     * @param inputs    Count of inputs
+     * @param biasInput Input of bias neuron on the input layer
+     * @param outputs   Count of outputs
+     */
     public BackpropagationAlgorithm(int inputs, double biasInput, int outputs) {
         neuronet = new Neuronet(this, inputs, biasInput, outputs);
     }
 
+    /**
+     * Constructor of back propagation algorithm
+     *
+     * @param inputs  Count of inputs
+     * @param outputs Count of outputs
+     */
     public BackpropagationAlgorithm(int inputs, int outputs) {
         this(inputs, 0, outputs);
     }
 
+    /**
+     * Initialization of neural network with hidden layers and bias neuron
+     *
+     * @param inputs             Count of inputs
+     * @param biasInput          Input of bias neuron on the input layer
+     * @param hiddenLayerStructs Hidden layer structure array
+     * @param outputs            Count of outputs
+     */
     private void init(int inputs, double biasInput, Neuronet.HiddenLayerStruct[] hiddenLayerStructs, int outputs) {
         neuronet = new Neuronet(this, inputs, biasInput, hiddenLayerStructs, outputs);
     }
@@ -110,6 +146,11 @@ public class BackpropagationAlgorithm implements IAlgorithm {
         }
     }
 
+    /**
+     * Get random double from -0.5 to 0.5
+     *
+     * @return Return random value in range -0.5;0.5
+     */
     private double getRandomAboveZero() {
         double random = Math.random();
         return random > 0.5 ? random - 1 : random;

@@ -9,14 +9,34 @@ import java.util.Arrays;
 public class HebbAlgorithm implements IAlgorithm {
     private INeuronet neuronet;
 
+    /**
+     * Constructor of Hebb algorithm with bias neuron
+     *
+     * @param inputs     Count of inputs
+     * @param biasOutput Input of bias neuron on the input layer
+     * @param outputs    Count of outputs
+     */
     public HebbAlgorithm(int inputs, double biasOutput, int outputs) {
         init(inputs, biasOutput, outputs);
     }
 
+    /**
+     * Constructor of Hebb algorithm
+     *
+     * @param inputs  Count of inputs
+     * @param outputs Count of outputs
+     */
     public HebbAlgorithm(int inputs, int outputs) {
         this(inputs, 0, outputs);
     }
 
+    /**
+     * Initialization of neural network with bias neuron
+     *
+     * @param inputs     Count of inputs
+     * @param biasOutput Input of bias neuron on the input layer
+     * @param outputs    Count of outputs
+     */
     private void init(int inputs, double biasOutput, int outputs) {
         neuronet = new Neuronet(this, inputs, biasOutput, outputs);
     }
