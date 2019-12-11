@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.text.MessageFormat;
 
 public class Main {
-    //System.exit(1000225);
+    //System.exit(1000328);
     public static final char[] ALPHABET = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
             'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     public static double[][] trainingSet;
@@ -82,6 +82,17 @@ public class Main {
 
         /*Lab11*/
         stringBuilder.append("\nLab11\n");
+        FuzzyLogic fuzzyLogic = new FuzzyLogic(new FuzzyLogic.FuzzySetStruct('F', .9, .6, .3, 1),
+                new FuzzyLogic.FuzzySetStruct('G', .5, .3, .9, 1),
+                new FuzzyLogic.FuzzySetStruct('H', 1, .6, .2, 0));
+        stringBuilder.append(fuzzyLogic.launch());
+
+        /*Lab12*/
+        stringBuilder.append("\nLab12\n");
+        stringBuilder.append("Function: ")
+                .append("x * z + 99 * y + 13 * z")
+                .append(" = ")
+                .append("-13").append("\n");
         GeneticAlgorithm geneticAlgorithm =
                 new GeneticAlgorithm(50, 3, -13) {
                     @Override

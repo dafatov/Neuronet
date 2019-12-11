@@ -1,4 +1,4 @@
-package ru.demetrious.algorithms;
+package ru.demetrious;
 
 import java.util.Random;
 
@@ -30,10 +30,10 @@ public class GeneticAlgorithm {
         Chromosome chromosome = solve();
 
         if (chromosome != null) {
-            stringBuilder.append("Solution is found: ").append(chromosome).append("\n");
-            stringBuilder.append("Iterations ").append(iterations);
+            stringBuilder.append("Solution is found: ").append(chromosome).append(" in ")
+                    .append(iterations).append(" iterations").append("\n");
         } else {
-            stringBuilder.append("No solution found for ").append(iterations).append(" iterations");
+            stringBuilder.append("No solution found in ").append(iterations).append(" iterations");
         }
         return stringBuilder;
     }
@@ -160,118 +160,118 @@ public class GeneticAlgorithm {
     public void setTarget(int target) {
         this.target = target;
     }
-}
 
-class Chromosome {
-    private float probability;
-    private GeneticAlgorithm geneticAlgorithm;
-    private int[] genes;
-    private float fitness;
+    private class Chromosome {
+        private float probability;
+        private GeneticAlgorithm geneticAlgorithm;
+        private int[] genes;
+        private float fitness;
 
-    Chromosome(GeneticAlgorithm geneticAlgorithm, int unknowns) {
-        this.setGeneticAlgorithm(geneticAlgorithm);
-        setGenes(new int[unknowns]);
-        init();
-    }
-
-    private void init() {
-        for (int i = 0; i < getGenes().length; i++) {
-            getGenes()[i] = getRandomGene();
+        Chromosome(GeneticAlgorithm geneticAlgorithm, int unknowns) {
+            this.setGeneticAlgorithm(geneticAlgorithm);
+            setGenes(new int[unknowns]);
+            init();
         }
-    }
 
-    float calculateFitness() {
-        int closeness = Math.abs(getGeneticAlgorithm().getTarget() - getGeneticAlgorithm().function(getGenes()));
-        if (closeness != 0) {
-            return 1 / (float) closeness;
-        } else return -1;
-    }
-
-    private int getRandomGene() {
-        return getRandomIntRange(-Math.abs(getGeneticAlgorithm().getTarget()), Math.abs(getGeneticAlgorithm().getTarget()));
-    }
-
-    private int getRandomIntRange(int start, int end) {
-        Random random = new Random();
-        return random.nextInt(end - start) + start;
-    }
-
-    Chromosome getChildCrossing(Chromosome pair) {
-        Chromosome[] children = getChildrenCrossing(pair);
-        return children[getRandomIntRange(0, 1)];
-    }
-
-    private Chromosome[] getChildrenCrossing(Chromosome pair) {
-        int crossingLine = getRandomCrossingLine();
-        Chromosome[] children = new Chromosome[2];
-        children[0] = new Chromosome(getGeneticAlgorithm(), getGeneticAlgorithm().getUnknowns());
-        children[1] = new Chromosome(getGeneticAlgorithm(), getGeneticAlgorithm().getUnknowns());
-
-        for (int i = 0; i < getGeneticAlgorithm().getUnknowns(); i++) {
-            if (i < crossingLine) {
-                children[0].getGenes()[i] = this.getGenes()[i];
-                children[1].getGenes()[i] = pair.getGenes()[i];
-            } else {
-                children[0].getGenes()[i] = pair.getGenes()[i];
-                children[1].getGenes()[i] = this.getGenes()[i];
-            }
-        }
-        return children;
-    }
-
-    private int getRandomCrossingLine() {
-        return getRandomIntRange(0, getGeneticAlgorithm().getUnknowns() - 2);
-    }
-
-    void mutate() {
-        for (int i = 0; i < getGeneticAlgorithm().getUnknowns(); i++) {
-            float randomPercentage = getGeneticAlgorithm().getRandomAlpha();
-            if (randomPercentage < GeneticAlgorithm.MUTATION_CHANCE) {
+        private void init() {
+            for (int i = 0; i < getGenes().length; i++) {
                 getGenes()[i] = getRandomGene();
             }
         }
-    }
 
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append("[");
-        for (int i = 0; i < getGenes().length; i++) {
-            stringBuilder.append(getGenes()[i]).append(i == getGenes().length - 1 ? "]" : ", ");
+        float calculateFitness() {
+            int closeness = Math.abs(getGeneticAlgorithm().getTarget() - getGeneticAlgorithm().function(getGenes()));
+            if (closeness != 0) {
+                return 1 / (float) closeness;
+            } else return -1;
         }
-        return stringBuilder.toString();
-    }
 
-    public float getProbability() {
-        return probability;
-    }
+        private int getRandomGene() {
+            return getRandomIntRange(-Math.abs(getGeneticAlgorithm().getTarget()), Math.abs(getGeneticAlgorithm().getTarget()));
+        }
 
-    public void setProbability(float probability) {
-        this.probability = probability;
-    }
+        private int getRandomIntRange(int start, int end) {
+            Random random = new Random();
+            return random.nextInt(end - start) + start;
+        }
 
-    public GeneticAlgorithm getGeneticAlgorithm() {
-        return geneticAlgorithm;
-    }
+        Chromosome getChildCrossing(Chromosome pair) {
+            Chromosome[] children = getChildrenCrossing(pair);
+            return children[getRandomIntRange(0, 1)];
+        }
 
-    public void setGeneticAlgorithm(GeneticAlgorithm geneticAlgorithm) {
-        this.geneticAlgorithm = geneticAlgorithm;
-    }
+        private Chromosome[] getChildrenCrossing(Chromosome pair) {
+            int crossingLine = getRandomCrossingLine();
+            Chromosome[] children = new Chromosome[2];
+            children[0] = new Chromosome(getGeneticAlgorithm(), getGeneticAlgorithm().getUnknowns());
+            children[1] = new Chromosome(getGeneticAlgorithm(), getGeneticAlgorithm().getUnknowns());
 
-    public int[] getGenes() {
-        return genes;
-    }
+            for (int i = 0; i < getGeneticAlgorithm().getUnknowns(); i++) {
+                if (i < crossingLine) {
+                    children[0].getGenes()[i] = this.getGenes()[i];
+                    children[1].getGenes()[i] = pair.getGenes()[i];
+                } else {
+                    children[0].getGenes()[i] = pair.getGenes()[i];
+                    children[1].getGenes()[i] = this.getGenes()[i];
+                }
+            }
+            return children;
+        }
 
-    public void setGenes(int[] genes) {
-        this.genes = genes;
-    }
+        private int getRandomCrossingLine() {
+            return getRandomIntRange(0, getGeneticAlgorithm().getUnknowns() - 2);
+        }
 
-    public float getFitness() {
-        return fitness;
-    }
+        void mutate() {
+            for (int i = 0; i < getGeneticAlgorithm().getUnknowns(); i++) {
+                float randomPercentage = getGeneticAlgorithm().getRandomAlpha();
+                if (randomPercentage < GeneticAlgorithm.MUTATION_CHANCE) {
+                    getGenes()[i] = getRandomGene();
+                }
+            }
+        }
 
-    public void setFitness(float fitness) {
-        this.fitness = fitness;
+        @Override
+        public String toString() {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.append("[");
+            for (int i = 0; i < getGenes().length; i++) {
+                stringBuilder.append(getGenes()[i]).append(i == getGenes().length - 1 ? "]" : ", ");
+            }
+            return stringBuilder.toString();
+        }
+
+        public float getProbability() {
+            return probability;
+        }
+
+        public void setProbability(float probability) {
+            this.probability = probability;
+        }
+
+        public GeneticAlgorithm getGeneticAlgorithm() {
+            return geneticAlgorithm;
+        }
+
+        public void setGeneticAlgorithm(GeneticAlgorithm geneticAlgorithm) {
+            this.geneticAlgorithm = geneticAlgorithm;
+        }
+
+        public int[] getGenes() {
+            return genes;
+        }
+
+        public void setGenes(int[] genes) {
+            this.genes = genes;
+        }
+
+        public float getFitness() {
+            return fitness;
+        }
+
+        public void setFitness(float fitness) {
+            this.fitness = fitness;
+        }
     }
 }
