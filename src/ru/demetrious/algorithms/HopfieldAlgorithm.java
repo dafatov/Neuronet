@@ -1,6 +1,5 @@
 package ru.demetrious.algorithms;
 
-import com.sun.istack.internal.Nullable;
 import ru.demetrious.Main;
 import ru.demetrious.neuronet.INeuronet;
 import ru.demetrious.neuronet.Neuronet;
@@ -78,7 +77,7 @@ public class HopfieldAlgorithm implements IAlgorithm {
     }
 
     @Override
-    public boolean learn(@Nullable double[] input, double[] ideal) {
+    public boolean learn(double[] input, double[] ideal) {
         if (neuronet.getOutput().getNeurons().length == ideal.length &&
                 input == null) {
             for (int i = 0; i < ideal.length; i++) {

@@ -96,7 +96,7 @@ public class Main {
                     V - множество различной еды: борщ(1), лягушачьи лапки(2), онигири(3), бургер(4)
                     A = европеец = 0.7/1 + 1/2 + 0.2/3 + 0/4
                     B = калорийная = 0.8/1 + 0.2/2 + 0.6/3 + 1/4
-                    C = горящая пища = 1/1 + 0.3/2 + 0/3 + 0.8/4*/
+                    C = горячая пища = 1/1 + 0.3/2 + 0/3 + 0.8/4*/
         stringBuilder.append("\nLab11\n");
         FuzzyLogic fuzzyLogic = new FuzzyLogic(new FuzzyLogic.FuzzySetStruct('A', .7, 1, .2, 0),
                 new FuzzyLogic.FuzzySetStruct('B', .8, .2, .6, 1),

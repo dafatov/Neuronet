@@ -1,6 +1,5 @@
 package ru.demetrious.algorithms;
 
-import com.sun.istack.internal.NotNull;
 import ru.demetrious.neuronet.INeuronet;
 
 public interface IAlgorithm {
@@ -78,7 +77,7 @@ public interface IAlgorithm {
      * @param ideal Ideal result data
      * @return Returns whether the real output value matches the ideal
      */
-    boolean learn(double[] input, @NotNull double[] ideal);
+    boolean learn(double[] input, double[] ideal);
 
     /**
      * Activation function, which is calculated for the output of each neuron

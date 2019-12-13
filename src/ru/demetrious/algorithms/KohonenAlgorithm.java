@@ -1,6 +1,5 @@
 package ru.demetrious.algorithms;
 
-import com.sun.istack.internal.Nullable;
 import ru.demetrious.Main;
 import ru.demetrious.neuronet.INeuronet;
 import ru.demetrious.neuronet.KohonenNeuronet;
@@ -66,7 +65,7 @@ public class KohonenAlgorithm implements IAlgorithm {
     }
 
     @Override
-    public boolean learn(double[] input, @Nullable double[] ideal) {
+    public boolean learn(double[] input, double[] ideal) {
         if (neuronet.getInput().getNeurons().length == input.length &&
                 ideal == null) {
             double[] inputNormalized = normalize(input.clone());
